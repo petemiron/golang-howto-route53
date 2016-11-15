@@ -38,6 +38,12 @@ func main() {
 
 	svc := route53.New(sess)
 
+	createCNAME(svc)
+	listCNAMES(svc)
+}
+
+func createCNAME(svc *route53.Route53) {
+
 	params := &route53.ChangeResourceRecordSetsInput{
 		ChangeBatch: &route53.ChangeBatch{ // Required
 			Changes: []*route53.Change{ // Required
@@ -71,5 +77,32 @@ func main() {
 	}
 
 	// Pretty-print the response data.
+	fmt.Println("Change Response:")
 	fmt.Println(resp)
+}
+
+func listCNAMES(svc *route53.Route53) {
+	// Now lets list all of the records.
+	// For the life of me, I can't figure out how to get these lists to actually constrain the results.
+	// AFAICT, supplying only the HostedZoneId returns exactly the same results as any valid input in all params.
+	listParams := &route53.ListResourceRecordSetsInput{
+		HostedZoneId: aws.String(zoneId), // Required
+		// MaxItems:              aws.String("100"),
+		// StartRecordIdentifier: aws.String("Sample update."),
+		// StartRecordName:       aws.String("com."),
+		// StartRecordType:       aws.String("CNAME"),
+	}
+	respList, err := svc.ListResourceRecordSets(listParams)
+
+	if err != nil {
+		// Print the error, cast err to awserr.Error to get the Code and
+		// Message from an error.
+		fmt.Println(err.Error())
+		return
+	}
+
+	// Pretty-print the response data.
+	fmt.Println("All records:")
+	fmt.Println(respList)
+
 }

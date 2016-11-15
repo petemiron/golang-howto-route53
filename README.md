@@ -23,7 +23,7 @@ aws_access_key_id = [your access key id]
 aws_secret_access_key = [your secret access key] 
 ```
 
-# Setup your CNAME
+# Create your CNAME
 This is actually a pretty straightforward common task, but I haven't found good documentation on it, so here goes.
 
 I've stripped down the AWS sdk examples to just the bare minimum for setting up a CNAME record.
@@ -32,6 +32,7 @@ I'm using the UPSERT Action, which will automatically insert or update. Name is 
 for. Target is the destination of the CNAME record. You can also add a TTL.
 
 ``` go
+func createCNAME(svc *route53.Route53) {
 ...
 	params := &route53.ChangeResourceRecordSetsInput{
 	    ChangeBatch: &route53.ChangeBatch{ // Required
@@ -58,6 +59,21 @@ for. Target is the destination of the CNAME record. You can also add a TTL.
 	}
 	resp, err := svc.ChangeResourceRecordSets(params)
 ...
+```
+
+# List all domains
+I can't figure out how to get this query to constrain results. If you've got a suggestion, let me know.
+
+``` go
+func listCNAMES(svc *route53.Route53) {
+...
+	listParams := &route53.ListResourceRecordSetsInput{
+		HostedZoneId: aws.String(zoneId), // Required
+		...
+	}
+	respList, err := svc.ListResourceRecordSets(listParams)
+...
+}
 ```
 
 # Run the example
