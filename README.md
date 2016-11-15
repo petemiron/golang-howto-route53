@@ -4,7 +4,7 @@ The goal of this how-to is to demonstrate adding a CNAME to a domain in Amazon's
 # Prerequisites
 
 ## Create Hosted Zone
-Setup a new hosted zone by going to the (Route53 home in your AWS account)[https://console.aws.amazon.com/route53/]
+Setup a new hosted zone by going to the [Route53 home in your AWS account](https://console.aws.amazon.com/route53/)
 
 Assuming you're registering a new domain, you'll get an email confirming your email address. Follow the steps, 
 Amazon will notify you once it's ready.
@@ -12,7 +12,7 @@ Amazon will notify you once it's ready.
 Once you have your domain registered, you'll get a Hosted Zone Id. Keep it ready, you'll need it in a bit.
 
 ## Setup your AWS Credentials
-The (AWS go-sdk)[http://docs.aws.amazon.com/sdk-for-go/api/service/route53/] requires you to setup the credentials 
+The [AWS go-sdk](http://docs.aws.amazon.com/sdk-for-go/api/service/route53/) requires you to setup the credentials
 in ~/.aws/credentials. 
 
 
